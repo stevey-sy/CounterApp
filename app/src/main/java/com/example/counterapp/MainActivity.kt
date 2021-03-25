@@ -9,7 +9,9 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.example.counterapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +26,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.activity_main)
+        // data binding
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         var count2 = savedInstanceState?.getInt("count")
 
@@ -39,21 +46,22 @@ class MainActivity : AppCompatActivity() {
         // livedata 를 사용하여 데이터의 변화를 관찰하도록 설정
         // 어떤 데이터?
         // view model 에서 사용하고 있는 데이터
-        viewModel.countLiveData.observe(this, Observer { count->
-            tvCounter.text = "$count"
-        })
+//        viewModel.countLiveData.observe(this, Observer { count->
+////            tvCounter.text = "$count"
+//            binding.counterText.text = "$count"
+//        })
 
-        addButton.setOnClickListener {
-//            viewModel.count++
-//            tvCounter.text = "${viewModel.count}"
-            viewModel.increaseCount()
-        }
-
-        subButton.setOnClickListener {
-//            viewModel.count--
-//            tvCounter.text = "${viewModel.count}"
-            viewModel.decreaseCount()
-        }
+//        addButton.setOnClickListener {
+////            viewModel.count++
+////            tvCounter.text = "${viewModel.count}"
+//            viewModel.increaseCount()
+//        }
+//
+//        subButton.setOnClickListener {
+////            viewModel.count--
+////            tvCounter.text = "${viewModel.count}"
+//            viewModel.decreaseCount()
+//        }
 
     }
 
