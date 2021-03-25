@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -40,7 +41,6 @@ class MainActivity : AppCompatActivity() {
             tvCounter.text = "${viewModel.count}"
         }
 
-
         registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 Log.d(TAG, "onActivityCreated: ")
@@ -73,4 +73,20 @@ class MainActivity : AppCompatActivity() {
         })
 
     }
+
+    // activity 가 종료될 때 데이터를 bundle 에 저장할 때 사용
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("count", viewModel.count)
+    }
+
+    // bundle 에 담긴 데이터를 사용해서 복원할 때 사용하는 메소드
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        viewModel.count = savedInstanceState.getInt("count")
+
+    }
+
+
+
 }
